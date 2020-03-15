@@ -2,22 +2,28 @@ package com.example.todo.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
+@Table(name = "task")
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @NotNull
     private Long id;
 
+    @Column(name = "localTaskId")
+    @NotNull
     private Long localTaskId;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "done")
     private boolean done;
 
     public Task() {
