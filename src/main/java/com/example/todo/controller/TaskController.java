@@ -26,36 +26,16 @@ public class TaskController {
 
     @GetMapping("/tasks")
     public ResponseEntity<List<LocalTask>> getAllTasks(Authentication authentication) {
-        System.out.println(authentication.getName());
-        List<Task> list = taskService.retrieveTasks();
-        List<LocalTask> response = new ArrayList<>();
-        for (Task t : list) {
-            response.add(new LocalTask(t.getLocalTaskId(), t.getTitle(), t.isDone()));
-        }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return taskService.getAllTasksByUsername(authentication.getName());
     }
 
     @PostMapping("/tasks")
-    public void addTask(@RequestBody LocalTask[] request) {
-        List<Task> list = taskService.retrieveTasks();
-        for (LocalTask requestTask : request) {
-            boolean flag = false;
-            for (Task serverTask : list) {
-                if (requestTask.getId().equals(serverTask.getLocalTaskId())) {
-                    taskService.addTask(new Task(serverTask.getId(), requestTask.getId(), requestTask.getTitle(), requestTask.isDone()));
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                taskService.addTask(new Task(requestTask.getId(), requestTask.getTitle(), requestTask.isDone()));
-            }
-        }
-
+    public void addTasks(@RequestBody LocalTask[] request, Authentication authentication) {
+        taskService.addTasks(request, authentication.getName());
     }
 
     @PostMapping("/delete")
-    public void removeTasks(@RequestBody RemovedTask[] removedTasks){
-        taskService.removeTasks(removedTasks);
+    public void removeTasks(@RequestBody RemovedTask[] removedTasks, Authentication authentication) {
+        taskService.removeTasks(removedTasks, authentication.getName());
     }
 }

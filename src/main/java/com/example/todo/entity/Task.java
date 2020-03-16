@@ -16,6 +16,10 @@ public class Task {
     @NotNull
     private Long id;
 
+    @Column(name = "username")
+    @NotNull
+    private String username;
+
     @Column(name = "localTaskId")
     @NotNull
     private Long localTaskId;
@@ -29,14 +33,16 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long localTaskId, String title, boolean done) {
+    public Task(String username, Long localTaskId, String title, boolean done) {
+        this.username = username;
         this.localTaskId = localTaskId;
         this.title = title;
         this.done = done;
     }
 
-    public Task(Long id, Long localTaskId, String title, boolean done) {
+    public Task(Long id, String username, Long localTaskId, String title, boolean done) {
         this.id = id;
+        this.username = username;
         this.localTaskId = localTaskId;
         this.title = title;
         this.done = done;
@@ -72,5 +78,13 @@ public class Task {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public String getUserId() {
+        return username;
+    }
+
+    public void setUserId(String username) {
+        this.username = username;
     }
 }

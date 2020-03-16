@@ -1,20 +1,20 @@
 package com.example.todo.service;
 
 import com.example.todo.entity.Task;
+import com.example.todo.entity.request.LocalTask;
 import com.example.todo.entity.request.RemovedTask;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ITaskService {
-    List<Task> retrieveTasks();
-
-    List<String> retrieveTaskTitles();
-
-    String retrieveTaskById(Long id);
+    List<Task> retrieveTasks(String username);
 
     void addTask(Task task);
 
-    void addTasks(Task[] tasks);
+    void removeTasks(RemovedTask[] removedTasks, String username);
 
-    void removeTasks(RemovedTask[] removedTasks);
+    void addTasks(LocalTask[] request, String name);
+
+    ResponseEntity<List<LocalTask>> getAllTasksByUsername(String name);
 }
