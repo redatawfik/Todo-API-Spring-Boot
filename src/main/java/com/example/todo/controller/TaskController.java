@@ -1,4 +1,4 @@
-package com.example.todo.web;
+package com.example.todo.controller;
 
 import com.example.todo.entity.Task;
 import com.example.todo.entity.request.LocalTask;
@@ -7,6 +7,7 @@ import com.example.todo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<LocalTask>> getAllTasks() {
+    public ResponseEntity<List<LocalTask>> getAllTasks(Authentication authentication) {
+        System.out.println(authentication.getName());
         List<Task> list = taskService.retrieveTasks();
         List<LocalTask> response = new ArrayList<>();
         for (Task t : list) {

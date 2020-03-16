@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "id")
     @NotNull
     private Long id;
