@@ -1,9 +1,6 @@
 package com.example.todo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ApplicationUser {
@@ -12,6 +9,9 @@ public class ApplicationUser {
     private long id;
     private String username;
     private String password;
+
+    @Transient
+    private String confirmPassword;
 
     public long getId() {
         return id;
@@ -31,5 +31,13 @@ public class ApplicationUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

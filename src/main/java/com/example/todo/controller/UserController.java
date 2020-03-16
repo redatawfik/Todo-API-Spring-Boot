@@ -2,6 +2,7 @@ package com.example.todo.controller;
 
 import com.example.todo.entity.ApplicationUser;
 import com.example.todo.repository.ApplicationUserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,17 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody ApplicationUser user) {
+    public ResponseEntity<String> signUp(@RequestBody ApplicationUser user) {
+        if(user.getPassword().length() < 7 ||
+        !user.getPassword().equals(user.getConfirmPassword())){
+            return ResponseEntity.badRequest().build();
+        }
+        if(applicationUserRepository.findByUsername(user.getUsername()) != null){
+            return ResponseEntity.badRequest().body("Username already exists!");
+        }
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(user);
+        return ResponseEntity.ok("Successful sign in!");
     }
 }

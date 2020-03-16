@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/tasks")
 public class TaskController {
 
     @Autowired
@@ -24,14 +25,15 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/tasks")
+    @GetMapping("/get")
     public ResponseEntity<List<LocalTask>> getAllTasks(Authentication authentication) {
         return taskService.getAllTasksByUsername(authentication.getName());
     }
 
-    @PostMapping("/tasks")
-    public void addTasks(@RequestBody LocalTask[] request, Authentication authentication) {
+    @PostMapping("/add")
+    public ResponseEntity<String> addTasks(@RequestBody LocalTask[] request, Authentication authentication) {
         taskService.addTasks(request, authentication.getName());
+        return ResponseEntity.ok("Successful add tasks!");
     }
 
     @PostMapping("/delete")
